@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/dot-dash.iml" filepath="$PROJECT_DIR$/.idea/dot-dash.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cra-template-dot-dash.iml" filepath="$PROJECT_DIR$/.idea/cra-template-dot-dash.iml" />
     </modules>
   </component>
 </project>

@@ -1,25 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import ProtectedRoute from "./Dash/Protected/ProtectedRoute";
+import Dashboard from "./Dash/Dashboard";
+import Login from "./Dash/Login/Login";
+import HomePage from "./Dot/Pages/HomePage";
+import NotFound from "./Dot/Pages/NotFound";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {useThemeContext} from "./Contexts/ThemeContext";
+import {Box, ThemeProvider} from "@mui/material";
+import {AuthProvider} from "./Contexts/Auth";
+import ChildComponent from "./Dash/ChildrenComponents/ChildComponent/ChildComponent";
+import CssBaseline from "@mui/material/CssBaseline";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage/>,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/admin-dashboard",
+    element: (
+        <ProtectedRoute>
+          <Dashboard/>
+        </ProtectedRoute>
+    ),
+    children: [
+      { path: "child", element: <ProtectedRoute><ChildComponent /></ProtectedRoute> },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound/>,
+  },
+]);
 function App() {
+const {theme} = useThemeContext();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <ThemeProvider theme={theme}>
+          <AuthProvider>
+            <Box width={'100%'} height={'100%'} bgcolor={theme.palette.background.default}>
+              <RouterProvider router={router} />
+            </Box>
+          </AuthProvider>
+          <CssBaseline />
+        </ThemeProvider>
   );
 }
 
